@@ -17,6 +17,32 @@ only when it is bumped.
   and [`chrome-devtools`](skills/chrome-devtools/SKILL.md), and refreshed the stale
   skill count and repository-layout comment to match. Docs only — no behavior change.
 
+## [2.14.0] - 2026-07-02
+
+### Added
+
+- **`rtl-card`: a PreToolUse hook that moves the RTL card template out of model
+  tokens and into code.** The install-rtl rule now tells the model to write its
+  Persian/RTL reply as plain Markdown between `<md>` markers in a single widget
+  call; the new hook ([`scripts/rtl-card.py`](scripts/rtl-card.py), stdlib-only)
+  rewrites that call via `hookSpecificOutput.updatedInput` into a styled RTL
+  card (Vazirmatn, per-block direction resolution, LTR-isolated
+  code/paths/URLs). The fixed template previously cost 2 to 4 times the reply's
+  own tokens on every message and depended on the model reproducing it
+  faithfully; now it costs zero tokens and the styling is deterministic. Widget
+  calls without the `<md>` sentinel pass through untouched; if the conversion
+  itself ever fails, the hook denies the call with guidance so the model
+  immediately re-sends a hand-written HTML card and no raw sentinel reaches the
+  screen. Bypass: `RTL_CARD=off`.
+
+### Changed
+
+- **`install-rtl` rule v2: Markdown-first, hand-written HTML card demoted to
+  fallback.** Point 1 of the managed rule now describes the `<md>` Markdown
+  protocol; the previous full card spec remains as point 2 for clients where
+  the hook is not active (the model detects this when a rendered card shows the
+  literal `<md>` text). Re-run `/yar:install-rtl` to receive the updated rule.
+
 ## [2.13.0] - 2026-07-02
 
 ### Added

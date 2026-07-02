@@ -6,9 +6,12 @@ RTL-language) replies correctly. Run via:  /yar:install-rtl
 Why: chat clients render plain-text messages as LTR paragraphs, so a reply that
 mixes Persian with English words, digits, or punctuation scrambles (BiDi) — the
 final period jumps to the head of the line, Latin tokens reorder, numeric
-ranges flip. The rule installed here is the battle-tested fix: render the whole
-reply as an RTL HTML widget card when a widget tool exists, keep every piece of
-plain chat text English, and isolate neutral-edged tokens (paths, URLs).
+ranges flip. The rule installed here is the battle-tested fix: write the whole
+reply as plain Markdown in one widget call and let the ``rtl-card`` PreToolUse
+hook style it locally into an RTL card (the fixed template costs zero model
+tokens), keep every piece of plain chat text English, and isolate neutral-edged
+tokens (paths, URLs). A hand-written HTML card remains the documented fallback
+for clients where the hook is not active.
 
 Idempotent: the rule lives between marker comments; re-running replaces the
 managed block in place (that is also how future upgrades of the rule arrive)
@@ -33,16 +36,23 @@ transliterating English words into the RTL script (natural code-switching must
 survive). What works:
 
 1. **If an inline HTML-widget tool is available** (e.g. `mcp__visualize__show_widget`):
-   render the **entire reply** as one RTL HTML card — never "card for the main
-   content + a plain-text summary in chat" (the summary scrambles too). Card
-   spec: `<div dir="rtl" lang="fa">` (match the reply's language),
+   put the **entire reply** in one widget call whose `widget_code` is exactly
+   `<md>` + plain Markdown + `</md>` — never "card for the main content + a
+   plain-text summary in chat" (the summary scrambles too). Write no HTML and
+   no styling: yar's `rtl-card` hook rewrites the call locally into a styled
+   RTL card (Vazirmatn, per-block direction, LTR-isolated code) at zero token
+   cost. Supported Markdown: headings, lists, tables, bold, italic, links,
+   blockquotes, fenced code, one small inline `<svg>`. Wrap every file path,
+   URL, CLI command, and code token in backticks; inside the card, mix RTL and
+   English naturally — the browser's BiDi algorithm lays it out correctly.
+2. **If a rendered card ever displays the literal `<md>` text**, the hook is
+   not active in this client: fall back to hand-writing the card as
+   `<div dir="rtl" lang="fa">` (match the reply's language) with
    `text-align: right`, a Persian-capable font (e.g. Vazirmatn 400/500 via
    fonts.googleapis.com), colors only through the host theme's CSS variables,
-   transparent background.
-2. **Inside the card**, mix RTL and English naturally — the browser's BiDi
-   algorithm lays it out correctly. One exception: a token that *starts or ends
-   with a neutral character* (file paths like `~/.claude/...`, URLs, CLI
-   commands) still breaks; wrap it in
+   transparent background. In that hand-written card, wrap any token that
+   *starts or ends with a neutral character* (file paths like `~/.claude/...`,
+   URLs, CLI commands) in
    `<span dir="ltr" style="display:inline-block; unicode-bidi: isolate;">…</span>`
    — a bare `dir="ltr"` is not enough; `inline-block` is what makes it atomic.
 3. **Outside the card: zero RTL plain text.** Even a 100%-pure-Persian sentence

@@ -1,6 +1,6 @@
 ---
 name: install-rtl
-description: Install yar's Persian/RTL chat-rendering rule into the machine's global ~/.claude/CLAUDE.md (idempotent managed marker block) so every project renders mixed Persian-English replies correctly — the whole reply as an RTL HTML widget card when a widget tool exists, English-only plain chat text, atomic LTR isolation for paths/URLs, and a BiDi-safe fallback for plain CLI. Run once per machine; re-run to update. Invoked manually as /yar:install-rtl; it does not auto-run.
+description: Install yar's Persian/RTL chat-rendering rule into the machine's global ~/.claude/CLAUDE.md (idempotent managed marker block) so every project renders mixed Persian-English replies correctly — the whole reply as plain Markdown in one widget call that the plugin's rtl-card hook styles locally into an RTL card at zero template cost, English-only plain chat text, atomic LTR isolation for paths/URLs, a hand-written-card fallback when the hook is inactive, and a BiDi-safe fallback for plain CLI. Run once per machine; re-run to update. Invoked manually as /yar:install-rtl; it does not auto-run.
 disable-model-invocation: true
 ---
 
@@ -19,7 +19,7 @@ If `$CLAUDE_PLUGIN_ROOT` is empty in the shell, find the plugin under `~/.claude
 After it succeeds, confirm to the user that:
 
 - The rule now lives in `~/.claude/CLAUDE.md` between `yar:install-rtl` marker comments — **global** (every project on this machine) and **idempotent**: re-running replaces only the managed block, which is also how future improvements to the rule arrive; everything else in the file is untouched. It honors `CLAUDE_CONFIG_DIR` when that is set.
-- What the rule does, in one breath: when replying in Persian (or any RTL language) in a chat client, the **whole reply** renders as one RTL HTML widget card (when a widget tool such as `mcp__visualize__show_widget` exists); tokens with neutral edges — file paths, URLs, CLI commands — are wrapped in an atomic LTR span; **all plain chat text outside cards** (intros, status notes between tool calls, closings) **is English**; and without any widget tool it falls back to structurally BiDi-safe plain text or plain English.
+- What the rule does, in one breath: when replying in Persian (or any RTL language) in a chat client, the **whole reply** goes into one widget call as plain Markdown between `<md>` markers (when a widget tool such as `mcp__visualize__show_widget` exists); the plugin's `rtl-card` PreToolUse hook converts and styles it locally — Vazirmatn, per-block direction, LTR-isolated paths/URLs/commands — at zero token cost; **all plain chat text outside cards** (intros, status notes between tool calls, closings) **is English**; if the hook is inactive the rule falls back to a hand-written HTML card, and without any widget tool to structurally BiDi-safe plain text or plain English.
 - Why it exists: chat clients lay plain text out as LTR paragraphs, so mixed RTL-LTR replies scramble — trailing periods jump to the head of the line, Latin tokens reorder, numeric ranges flip. Each clause of the rule corresponds to a scrambling actually observed in the wild; Unicode isolate characters and transliteration were both tested and do not work.
 - To undo, delete the managed block (markers included) from `~/.claude/CLAUDE.md`.
 

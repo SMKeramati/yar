@@ -25,6 +25,16 @@
             "timeout": 10
           }
         ]
+      },
+      {
+        "matcher": "mcp__visualize__show_widget",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"${CLAUDE_PLUGIN_ROOT}\"/scripts/rtl-card.sh",
+            "timeout": 10
+          }
+        ]
       }
     ]
   }

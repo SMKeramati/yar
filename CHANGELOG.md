@@ -10,6 +10,22 @@ only when it is bumped.
 
 ## [Unreleased]
 
+## [2.16.0] - 2026-07-03
+
+### Changed
+
+- **`install-rtl` rule v2: the whole reply ships as one self-contained styled
+  card.** The rule now carries a fixed `<style>` component kit the model copies
+  verbatim (Vazirmatn, per-block direction, LTR-isolated code, KPI grids,
+  CSS-only donut and bar charts, flow arrows, timelines, icon callouts, badges,
+  a `sendPrompt` CTA), so styling is deterministic and polish costs class names
+  instead of free-form HTML. Two zero-token alternatives were tested and
+  rejected on Claude Desktop: a PreToolUse hook rewriting the widget input
+  (`updatedInput` is ignored for MCP tools) and a CDN-loaded renderer (the
+  widget sandbox does not execute external scripts, so the card renders blank).
+  Cost: roughly 2k output tokens per carded reply. Re-run `/yar:install-rtl`
+  to receive the new rule.
+
 ## [2.15.0] - 2026-07-06
 
 ### Added

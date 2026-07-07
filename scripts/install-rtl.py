@@ -32,7 +32,7 @@ rejected. What works: render the whole reply as one self-contained widget card.
 
 1. **If an inline HTML-widget tool is available** (e.g. `mcp__visualize__show_widget`),
    deliver the ENTIRE reply as one widget call. The card must be fully
-   self-contained — no external scripts, no CDN, no network — because widget
+   self-contained — no scripts of any kind and no external resources; the single exception is the Google Fonts `@import` already inside the kit, which degrades to system fonts when unreachable — because widget
    sandboxes (Claude Desktop chat included) do not execute external scripts and
    ignore tool-input rewrites from hooks; anything loaded from outside the widget
    renders blank. All styling and icons live in the block below, so you spend
@@ -53,7 +53,7 @@ rejected. What works: render the whole reply as one self-contained widget card.
 .rc p{margin:.6em 0}.rc .lead{color:var(--text-secondary);font-size:1.05em}
 .rc p,.rc li,.rc h2,.rc h4,.rc td,.rc th,.rc .kpi,.rc .tl div{unicode-bidi:plaintext}
 .rc strong{font-weight:700}
-.rc code{direction:ltr;unicode-bidi:isolate;font-family:var(--font-mono);font-size:.85em;color:var(--text-accent);background:var(--surface-2);border:.5px solid var(--border);border-radius:5px;padding:1px 5px}
+.rc code{display:inline-block;direction:ltr;unicode-bidi:isolate;font-family:var(--font-mono);font-size:max(.85em,11px);color:var(--text-accent);background:var(--surface-2);border:.5px solid var(--border);border-radius:5px;padding:1px 5px}
 .rc a{color:var(--text-accent);text-decoration:none}.rc a:hover{border-bottom:1px solid currentColor}
 .rc ul,.rc ol{padding-inline-start:1.5em;margin:.5em 0}.rc li{margin:.35em 0;position:relative}
 .rc ul{list-style:none}.rc ul>li::before{content:'';position:absolute;inset-inline-start:-1.1em;top:.68em;width:4px;height:4px;border-radius:50%;background:var(--text-accent)}
@@ -68,18 +68,18 @@ rejected. What works: render the whole reply as one self-contained widget card.
 .rc .cal.warn{background:var(--bg-warning)}.rc .cal.warn::before{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23c98a1a' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 3l9.5 17H2.5z'/%3E%3Cpath d='M12 9v5M12 17h.01'/%3E%3C/svg%3E")}
 .rc .cal.danger{background:var(--bg-danger)}.rc .cal.danger::before{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23d64545' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M8 2h8l6 6v8l-6 6H8l-6-6V8z'/%3E%3Cpath d='M12 8v5M12 16h.01'/%3E%3C/svg%3E")}
 .rc table{border-collapse:collapse;width:100%;margin:.8em 0;font-size:.96em}
-.rc thead th{color:var(--text-secondary);font-weight:700;font-size:.88em;border-bottom:1.5px solid var(--border-strong);padding:5px 10px;text-align:right}
+.rc thead th{color:var(--text-secondary);font-weight:700;font-size:max(.88em,11px);border-bottom:1.5px solid var(--border-strong);padding:5px 10px;text-align:right}
 .rc tbody td{padding:7px 10px;border-bottom:.5px solid var(--border);text-align:right}
 .rc tbody tr:last-child td{border-bottom:none}.rc tbody tr:hover td{background:var(--surface-2)}
 .rc .kv{margin:.8em 0}.rc .kv>div{display:flex;justify-content:space-between;gap:14px;padding:6px 2px;border-bottom:.5px solid var(--border)}.rc .kv>div:last-child{border:none}.rc .kv b{color:var(--text-secondary);font-weight:400}.rc .kv span{font-weight:500}
 .rc .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(96px,1fr));gap:10px;margin:.8em 0}.rc .grid.c2{grid-template-columns:1fr 1fr}.rc .grid.c3{grid-template-columns:1fr 1fr 1fr}
 .rc .kpi{background:var(--surface-2);border:.5px solid var(--border);border-radius:11px;padding:11px 13px}
-.rc .kpi .l{font-size:.82em;color:var(--text-secondary);margin-bottom:3px}
+.rc .kpi .l{font-size:max(.82em,11px);color:var(--text-secondary);margin-bottom:3px}
 .rc .kpi .n{font-size:1.8em;font-weight:800;line-height:1.2;color:var(--text-primary)}
-.rc .trend{display:inline-block;font-size:.55em;font-weight:700;padding:1px 8px;border-radius:12px;vertical-align:2px;margin-inline-start:7px}
+.rc .trend{display:inline-block;font-size:max(.55em,11px);font-weight:700;padding:1px 8px;border-radius:12px;vertical-align:2px;margin-inline-start:7px}
 .rc .trend.up{background:var(--bg-success);color:var(--ca)}.rc .trend.up::before{content:'▲ '}
 .rc .trend.dn{background:var(--bg-danger);color:var(--cd)}.rc .trend.dn::before{content:'▼ '}
-.rc .bars{margin:.8em 0}.rc .bar{display:flex;align-items:center;gap:10px;margin:.45em 0}.rc .bar .l{flex:0 0 auto;min-width:4.5em;color:var(--text-secondary)}.rc .bar .t{flex:1;height:7px;background:var(--surface-2);border-radius:4px;overflow:hidden}.rc .bar .t i{display:block;height:100%;background:var(--text-accent);border-radius:4px}.rc .bar .v{flex:0 0 auto;font-weight:700;font-size:.9em}
+.rc .bars{margin:.8em 0}.rc .bar{display:flex;align-items:center;gap:10px;margin:.45em 0}.rc .bar .l{flex:0 0 auto;min-width:4.5em;color:var(--text-secondary)}.rc .bar .t{flex:1;height:7px;background:var(--surface-2);border-radius:4px;overflow:hidden}.rc .bar .t i{display:block;height:100%;background:var(--text-accent);border-radius:4px}.rc .bar .v{flex:0 0 auto;font-weight:700;font-size:max(.9em,11px)}
 .rc .flow{display:flex;flex-wrap:wrap;align-items:center;gap:34px;margin:.9em .2em}
 .rc .flow .s{position:relative;background:var(--surface-2);border:.5px solid var(--border);border-radius:9px;padding:5px 13px;font-weight:500}
 .rc .flow .s:not(:last-child)::after{content:'';position:absolute;inset-inline-end:-28px;top:50%;width:22px;height:1.5px;border-radius:1px;background:var(--text-accent);transform:translateY(-50%)}
@@ -95,7 +95,7 @@ rejected. What works: render the whole reply as one self-contained widget card.
 .rc .tl>div{position:relative;margin:.8em 0}
 .rc .tl>div::before{content:'';position:absolute;inset-inline-start:-1.34em;top:.5em;width:8px;height:8px;border-radius:50%;background:var(--text-accent);outline:2.5px solid var(--surface-1)}
 .rc .tl b{display:block;font-weight:700}
-.rc .badge{display:inline-block;font-size:.78em;font-weight:700;padding:1px 9px;border-radius:20px;background:var(--surface-2);color:var(--text-secondary)}
+.rc .badge{display:inline-block;font-size:max(.78em,11px);font-weight:700;padding:1px 9px;border-radius:20px;background:var(--surface-2);color:var(--text-secondary)}
 .rc .badge.ok{background:var(--bg-success);color:var(--ca)}.rc .badge.warn{background:var(--bg-warning);color:#c98a1a}.rc .badge.info{background:var(--bg-accent);color:var(--cb)}
 .rc hr{border:none;border-top:.5px solid var(--border);margin:1.3em 0}
 .rc .cta{display:inline-flex;align-items:center;gap:6px;background:var(--text-accent);color:var(--surface-1);border:none;border-radius:9px;padding:7px 15px;font-family:inherit;font-size:1em;font-weight:700;cursor:pointer;margin-top:.4em}.rc .cta::after{content:'←';font-weight:400}.rc .cta:hover{opacity:.88}
@@ -116,12 +116,17 @@ CONTENT
    timeline `<div class="tl"><div><b>title</b>text</div>...</div>`; and an optional
    closing CTA `<div class="btns"><button class="cta" onclick="sendPrompt('exact prompt')">label</button></div>`.
 
-3. **Composition**: open with `<h2>` plus one `<p class="lead">`; anything
-   enumerable becomes a list (never a run of paragraph pairs); put the single
-   most important takeaway in one callout; use kpi/bars/donut for numbers,
-   flow/tl for sequences, table/kv for structured facts. Wrap every path,
-   command, URL, and code token in `<code>`. A plain answer is still `<h2>` +
-   lead + a list, not a wall of paragraphs.
+3. **Composition: pick the lightest structure that fits the content.** A short
+   conversational answer is plain paragraphs with zero components; never reach
+   for a component just because the kit has it. When the content genuinely
+   benefits: numbers that tell a story get kpi/bars/donut, sequences get
+   flow/tl, structured facts get table/kv, and the single most important
+   takeaway can sit in one callout. When a reply is long enough to need a
+   heading, `<h2>` plus one `<p class="lead">` reads best. Wrap every path,
+   command, URL, and code token in `<code>`. One bidi caveat:
+   `unicode-bidi:plaintext` takes each line's direction from its first strong
+   character, so an RTL line that must START with a Latin token needs `&rlm;`
+   prefixed (or lead with an RTL word) to stay right-to-left.
 
 4. **Outside the card: zero RTL plain text.** Every intro line, status note, and
    closing sentence is either inside a card or written in English. The widget IS

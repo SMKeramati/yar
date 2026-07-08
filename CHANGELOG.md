@@ -14,6 +14,14 @@ only when it is bumped.
 
 ### Changed
 
+- **Direction-aware cards: one BASE now styles both directions.** The card
+  wrapper's `dir` attribute follows the reply language: `dir="rtl"` behaves
+  exactly as before, and `dir="ltr"` (English replies, optional) flips text
+  alignment, switches Vazirmatn for Inter, and mirrors the flow and CTA
+  arrows through four override rules that ship inertly inside BASE. Ported
+  from readable 4.4 production use; no new snippets and no size change for
+  RTL replies.
+
 - **`install-rtl` rule v2: the whole reply ships as one self-contained styled
   card.** The rule now carries a fixed `<style>` component kit the model copies
   verbatim (Vazirmatn, per-block direction, LTR-isolated code, KPI grids,

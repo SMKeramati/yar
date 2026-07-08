@@ -45,7 +45,7 @@ rejected. What works: render the whole reply as one self-contained widget card.
 
 <div class="rc" dir="rtl">
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;700;800&family=Inter:wght@400;500;700;800&display=swap');
 .rc{--ca:#0f9d58;--cb:#3f8ac9;--cc:#e0a52e;--cd:#d96666;font-family:Vazirmatn,Tahoma,sans-serif;font-size:11.5px;line-height:1.9;color:var(--text-primary);background:var(--surface-1);border:.5px solid var(--border);border-radius:14px;padding:1.2rem 1.4rem;text-align:right;margin:.5rem 0}
 .rc>:first-child{margin-top:0}.rc>:last-child{margin-bottom:0}
 .rc h2{font-weight:800;font-size:1.35em;margin:0 0 .15em}
@@ -67,9 +67,19 @@ rejected. What works: render the whole reply as one self-contained widget card.
 .rc .cal.tip{background:var(--bg-success);border-color:var(--ca)}.rc .cal.note{background:var(--bg-accent);border-color:var(--cb)}.rc .cal.warn{background:var(--bg-warning);border-color:#c98a1a}.rc .cal.danger{background:var(--bg-danger);border-color:#d64545}
 .rc hr{border:none;border-top:.5px solid var(--border);margin:1.3em 0}
 .rc pre{direction:ltr;text-align:left;unicode-bidi:isolate;font-family:var(--font-mono);font-size:max(.85em,11px);background:var(--surface-2);border:.5px solid var(--border);border-radius:8px;padding:10px 12px;overflow-x:auto;line-height:1.6;margin:.8em 0}.rc pre code{display:block;border:none;background:none;padding:0}
+.rc[dir=ltr]{text-align:left;font-family:Inter,system-ui,sans-serif}
+.rc[dir=ltr] thead th,.rc[dir=ltr] tbody td{text-align:left}
+.rc[dir=ltr] .cta::after{content:'→'}
+.rc[dir=ltr] .flow .s:not(:last-child)::before{transform:translateY(-50%) rotate(225deg)}
 </style>
 CONTENT
 </div>
+
+   The same card serves English/LTR replies: set `dir="ltr"` on the wrapper and
+   keep everything else identical — the four `[dir=ltr]` rules at the end of
+   BASE (inert for RTL cards) flip alignment, switch Vazirmatn for Inter, and
+   mirror the flow and CTA arrows. Persian/RTL replies MUST be carded; for
+   English replies the card is optional and plain text stays acceptable.
 
 2. **The kit is pay-per-use.** BASE above already styles all text content:
    `<h2>` title plus `<p class="lead">` intro; `<h3>` per section; `<p>`;

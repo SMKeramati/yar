@@ -10,7 +10,7 @@ only when it is bumped.
 
 ## [Unreleased]
 
-## [2.16.0] - 2026-07-07
+## [2.16.0] - 2026-07-08
 
 ### Changed
 

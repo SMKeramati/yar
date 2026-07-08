@@ -10,27 +10,7 @@ only when it is bumped.
 
 ## [Unreleased]
 
-## [2.17.0] - 2026-07-07
-
-### Changed
-
-- **`install-rtl` kit goes pay-per-use: always-on base plus per-component
-  snippets, roughly 70% cheaper for prose replies.** The style kit no longer
-  ships whole with every reply. A 2.5KB BASE covers all text content
-  (headings, paragraphs, lists, ok/no items, callouts, LTR-isolated code),
-  and each component (table, badge, kv, kpi, bars, donut, flow, timeline,
-  cta) carries its own CSS snippet the model appends only when the reply
-  actually uses it. The six SVG data-URI icons are gone: check/cross became
-  text glyphs and callouts use tint plus an accent border, removing the
-  1.5KB of most mangling-prone bytes from the verbatim copy. Per-reply
-  style cost: 8.8KB (~2.4k tokens) before, 2.5KB (~0.7k) for prose replies
-  now, 7.1KB (~2k) worst case with every component. All v2 review
-  invariants preserved: `display:inline-block` code isolation,
-  `max(...,11px)` size floors (now on the table body too),
-  palette-not-template composition, the `&rlm;` escape hatch, and the
-  precise network wording. Re-run `/yar:install-rtl` to receive it.
-
-## [2.16.0] - 2026-07-03
+## [2.16.0] - 2026-07-07
 
 ### Changed
 
@@ -43,8 +23,22 @@ only when it is bumped.
   rejected on Claude Desktop: a PreToolUse hook rewriting the widget input
   (`updatedInput` is ignored for MCP tools) and a CDN-loaded renderer (the
   widget sandbox does not execute external scripts, so the card renders blank).
-  Cost: roughly 2k output tokens per carded reply. Re-run `/yar:install-rtl`
-  to receive the new rule.
+  Re-run `/yar:install-rtl` to receive the new rule.
+- **The kit is pay-per-use: always-on base plus per-component snippets,
+  roughly 70% cheaper for prose replies.** The style kit does not ship whole
+  with every reply. A 2.5KB BASE covers all text content (headings,
+  paragraphs, lists, ok/no items, callouts, LTR-isolated code), and each
+  component (table, badge, kv, kpi, bars, donut, flow, timeline, cta)
+  carries its own CSS snippet the model appends only when the reply
+  actually uses it. The six SVG data-URI icons are gone: check/cross became
+  text glyphs and callouts use tint plus an accent border, removing the
+  1.5KB of most mangling-prone bytes from the verbatim copy. Per-reply
+  style cost: 8.8KB (~2.4k tokens) for the monolithic kit, 2.5KB (~0.7k)
+  for prose replies, 7.1KB (~2k) worst case with every component. Review
+  invariants are regression-tested: `display:inline-block` code isolation,
+  `max(...,11px)` size floors (now on the table body too),
+  palette-not-template composition, the `&rlm;` escape hatch, and the
+  precise network wording.
 
 ## [2.15.0] - 2026-07-06
 

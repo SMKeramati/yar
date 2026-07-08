@@ -39,6 +39,10 @@ only when it is bumped.
   `max(...,11px)` size floors (now on the table body too),
   palette-not-template composition, the `&rlm;` escape hatch, and the
   precise network wording.
+- **Multiline code blocks render correctly.** BASE gains a `<pre><code>`
+  rule: LTR block, monospace, bordered, horizontally scrollable, floored at
+  11px like every other derived size. Persian dev answers routinely carry
+  code blocks; previously they fell back to unstyled, BiDi-fragile text.
 
 ## [2.15.0] - 2026-07-06
 

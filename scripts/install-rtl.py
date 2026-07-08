@@ -66,6 +66,7 @@ rejected. What works: render the whole reply as one self-contained widget card.
 .rc .cal{display:flex;gap:9px;padding:9px 12px;border-radius:10px;margin:.8em 0;border-inline-start:3px solid var(--border-strong)}.rc .cal>div{min-width:0}.rc .cal p{margin:.15em 0}
 .rc .cal.tip{background:var(--bg-success);border-color:var(--ca)}.rc .cal.note{background:var(--bg-accent);border-color:var(--cb)}.rc .cal.warn{background:var(--bg-warning);border-color:#c98a1a}.rc .cal.danger{background:var(--bg-danger);border-color:#d64545}
 .rc hr{border:none;border-top:.5px solid var(--border);margin:1.3em 0}
+.rc pre{direction:ltr;text-align:left;unicode-bidi:isolate;font-family:var(--font-mono);font-size:max(.85em,11px);background:var(--surface-2);border:.5px solid var(--border);border-radius:8px;padding:10px 12px;overflow-x:auto;line-height:1.6;margin:.8em 0}.rc pre code{display:block;border:none;background:none;padding:0}
 </style>
 CONTENT
 </div>
@@ -75,7 +76,8 @@ CONTENT
    `<ul>`/`<ol>`; status items `<li class="ok">` and `<li class="no">`; callouts
    `<div class="cal tip|note|warn|danger"><div>...</div></div>`; `<a>`;
    `<strong>`; `<hr>` sparingly; `<code>` around every path, command, URL, and
-   code token (renders LTR-isolated). Everything else is a component with its
+   code token (renders LTR-isolated); `<pre><code>...</code></pre>` for
+   multiline code (renders as an LTR block). Everything else is a component with its
    own CSS snippet below: for EVERY component CONTENT uses, copy its snippet
    verbatim into the same `<style>`, right before `</style>`. Snippets are
    independent, order does not matter, never edit them. If unsure whether a
